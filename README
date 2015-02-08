@@ -1,46 +1,52 @@
-## Code for the SRTM to CSV converter
+SRTM_to_CSV.py converts a NASA SRTM3 hgt file into csv format
+The first line of the csv file contains the width, height and maximum_height
+Each line after that is in the format east,north,height
 
-## Converts a NASA SRTM3 hgt file into csv format
-## The first line of the csv file contains the width, height and maximum_height
-## Each line after that is in the format east,north,height
-## The csv files can then be:
-## joined together with CSV_Join.py
-## trimmed with CSV_Trim.py
-## healed with CSV_Heal.py
-## converted to stl format for 3D printing with CSV_to_STL.py
-## and then displayed in 3D with 3D_CSV.py or 3D_STL.py
+UK data is converted to OSGB coordinates using WGS84toOSGB36
+Data for the rest of the World is converted to UTM
 
-## To create a trimmed stl file of the UK Lake District:
-## Download N54W004.hgt and N54W003.hgt
-## Put SRTM_to_CSV.py, CSV_Join.py, CSV_Trim.py, CSV_to_STL.py in the same directory
-## From the command line:
-## python SRTM_to_CSV.py N54W004.hgt y
-## python SRTM_to_CSV.py N54W003.hgt y
-## python CSV_Join.py N54W004.csv N54W003.csv
-## python CSV_Trim.py N54W004_join.csv 298000 363000 477000 542000
-## python CSV_Heal.py N54W004_join_trim.csv
-## python CSV_to_STL.py N54W004_join_trim_heal.csv 5.0 130.0 0.5 1.0
-## python 3D_CSV.py N54W004_join_trim_heal.csv 5.0 y
-## python 3D_STL.py N54W004_join_trim_heal.stl
+The csv 'tiles' can then be:
+joined together with CSV_Join.py
+trimmed with CSV_Trim.py
+healed with CSV_Heal.py (interpolates any missing data points)
+converted to stl format for 3D printing with CSV_to_STL.py
+and then displayed in 3D with 3D_CSV.py or 3D_STL.py (optional)
 
-## Run from the command line as:
-## python STRM_to_CSV.py filename.hgt UK_data
-## UK_data = 'y' or 'n'
+To create a trimmed stl file of the UK Lake District:
+Download N54W004.hgt and N54W003.hgt
+Put SRTM_to_CSV.py, CSV_Join.py, CSV_Trim.py, CSV_to_STL.py in the same directory
+From the command line:
+python SRTM_to_CSV.py N54W004.hgt y
+python SRTM_to_CSV.py N54W003.hgt y
+python CSV_Join.py N54W004.csv N54W003.csv
+python CSV_Trim.py N54W004_join.csv 298000 363000 477000 542000
+python CSV_Heal.py N54W004_join_trim.csv
+python CSV_to_STL.py N54W004_join_trim_heal.csv 5.0 130.0 0.5 1.0
 
-## Download the SRTM3 (3 arc-second) hgt files from:
-## http://dds.cr.usgs.gov/srtm/version2_1/SRTM3/
-## The continent map is available at:
-## http://dds.cr.usgs.gov/srtm/version2_1/Documentation/Continent_def.gif
+slic3r or MeshLab will display the STL files, but if you want to view one
+using Python and MatPlotLib you can:
+python 3D_CSV.py N54W004_join_trim_heal.csv 5.0 y
+python 3D_STL.py N54W004_join_trim_heal.stl
 
-## The hgt filename refers to the lower left pixel or sample in the data
-## Sample spacing is 3 arc-seconds for SRTM3 data
-## Data is two byte signed integers (big endian)
-## First row in the file is the ***northernmost*** one
+Download the SRTM3 (3 arc-second) hgt files from:
+http://dds.cr.usgs.gov/srtm/version2_1/SRTM3/
+The continent map is available at:
+http://dds.cr.usgs.gov/srtm/version2_1/Documentation/Continent_def.gif
 
-## Download the utm package from:
-## https://pypi.python.org/pypi/utm
-## Unzip, cd into the utm-0.3.1 directory, then run
-## python setup.py install
+The hgt filename refers to the lower left pixel or sample in the data
+Sample spacing is 3 arc-seconds for SRTM3 data
+Data is two byte signed integers (big endian)
+First row in the file is the ***northernmost*** one
 
-## WGS84toOSGB36 gratefully plagiarised from:
-## http://hannahfry.co.uk/2012/02/01/converting-latitude-and-longitude-to-british-national-grid/
+Download the utm package from:
+https://pypi.python.org/pypi/utm
+Unzip, cd into the utm-0.3.1 directory, then run
+python setup.py install
+
+WGS84toOSGB36 is gratefully plagiarised from:
+http://hannahfry.co.uk/2012/02/01/converting-latitude-and-longitude-to-british-national-grid/
+
+If you have enjoyed this code, please make a small donation to Keswick Mountain Rescue Team:
+http://www.keswickmrt.org.uk/support_us.htm
+http://www.keswickmrt.org.uk/
+
