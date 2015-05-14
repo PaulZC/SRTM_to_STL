@@ -110,14 +110,15 @@ if __name__ == '__main__':
             except:
                 raise Exception('Invalid base thickness!')
             
-        #Shift all valid data points to start at zero
-        for l in range(points):
-            if hgt[l] > -32768.: hgt[l] -= hgt_min
+        #Make all valid points zero height or greater
+        if hgt_min < 0.:
+            for l in range(points):
+                if hgt[l] > -32768.: hgt[l] -= hgt_min
 
-        #Scale height and add base_offset to all valid points greater than the minimum
-        #to help define coastlines etc.. Zero everything else (including invalid points)
+        #Scale height and add base_offset to all valid points to help define coastlines etc..
+        #Zero invalid points
         for l in range(points):
-            if hgt[l] > (numpy.absolute(hgt_min)):
+            if hgt[l] > 0.:
                 hgt[l] = base_offset + (print_height * hgt[l] / hgt_max)
             else:
                 hgt[l] = 0.
