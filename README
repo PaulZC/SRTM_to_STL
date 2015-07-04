@@ -1,4 +1,4 @@
-SRTM_to_CSV.py converts a NASA SRTM3 hgt file into csv format
+SRTM_to_CSV.py converts a NASA SRTM3 (3 arcsec) hgt file into csv format
 The first line of the csv file contains the width, height and maximum_height
 Each line after that is in the format east,north,height
 
@@ -33,15 +33,24 @@ http://dds.cr.usgs.gov/srtm/version2_1/SRTM3/
 The continent map is available at:
 http://dds.cr.usgs.gov/srtm/version2_1/Documentation/Continent_def.gif
 
+SRTMGL1 (1 arc-second) data can be downloaded from:
+http://earthexplorer.usgs.gov/
+(select the data set called
+"NASA LPDAAC Collections \ NASA SRTM (SRTM 3) Collections \ NASA SRTM3 SRTMGL1")
+and then converted to 3 arc-second using SRTM_resample:
+python SRTM_resample.py N54W004.hgt
+This is advantageous as the 1 arc-second data has been cleaned up but
+avoids you having nine times as much data to process. Check out SRTM_to_STL_1
+if you want to work with the 1 arc-second data at full resolution
+
 The hgt filename refers to the lower left pixel or sample in the data
 Sample spacing is 3 arc-seconds for SRTM3 data
 Data is two byte signed integers (big endian)
 First row in the file is the ***northernmost*** one
 
-Download the utm package from:
-https://pypi.python.org/pypi/utm
-Unzip, cd into the utm-0.3.1 directory, then run
-python setup.py install
+utm has been gratefully plagiarised from https://pypi.python.org/pypi/utm
+and then modified to allow the UTM zone to be forced. This is essential if
+the hgt data crosses or ends on a UTM zone boundary. See http://www.dmap.co.uk/utmworld.htm
 
 WGS84toOSGB36 is gratefully plagiarised from:
 http://hannahfry.co.uk/2012/02/01/converting-latitude-and-longitude-to-british-national-grid/

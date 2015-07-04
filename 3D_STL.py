@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
         filename = ''
         
-        filename = 'N54W004_join_trim_heal.stl' # UK Lake District
+        #filename = 'N54W004_join_trim_heal.stl' # UK Lake District
         #filename = 'S35E018_join_trim_heal.stl' # Cape Town
 
         if filename == '':
