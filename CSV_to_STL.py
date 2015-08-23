@@ -159,13 +159,9 @@ if __name__ == '__main__':
         for row in range(height - 1):
             for col in range(width - 1):
                 origin = (row * width) + col
-                triangle = [origin,origin+1,origin+width]
+                triangle = [origin,origin+width,origin+1]
                 triangles.append(triangle)
                 #shades.append((hgt[origin]))
-
-        for row in range(height - 1):
-            for col in range(width - 1):
-                origin = (row * width) + col
                 triangle = [origin+1,origin+width,origin+width+1]
                 triangles.append(triangle)
                 #shades.append((hgt[origin]))
@@ -178,11 +174,7 @@ if __name__ == '__main__':
                 triangle = [origin,origin+1,origin+width]
                 triangles.append(triangle)
                 #shades.append((hgt[origin]))
-
-        for row in range(height - 1):
-            for col in range(width - 1):
-                origin = (row * width) + col + points
-                triangle = [origin+1,origin+width,origin+width+1]
+                triangle = [origin+1,origin+width+1,origin+width]
                 triangles.append(triangle)
                 #shades.append((hgt[origin]))
 
@@ -193,30 +185,24 @@ if __name__ == '__main__':
             triangle = [origin,origin+1,origin+points]
             triangles.append(triangle)
             #shades.append((hgt[origin]))
-        for col in range(width - 1):
-            origin = col
-            triangle = [origin+1,origin+points,origin+points+1]
+            triangle = [origin+1,origin+points+1,origin+points]
             triangles.append(triangle)
             #shades.append((hgt[origin]))
 
         for col in range(width - 1):
             origin = ((height - 1) * width) + col
-            triangle = [origin,origin+1,origin+points]
+            triangle = [origin,origin+points,origin+1]
             triangles.append(triangle)
             #shades.append((hgt[origin]))
-        for col in range(width - 1):
-            origin = ((height - 1) * width) + col
             triangle = [origin+1,origin+points,origin+points+1]
             triangles.append(triangle)
             #shades.append((hgt[origin]))
 
         for row in range(height - 1):
             origin = row * width
-            triangle = [origin,origin+width,origin+points]
+            triangle = [origin,origin+points,origin+width]
             triangles.append(triangle)
             #shades.append((hgt[origin]))
-        for row in range(height - 1):
-            origin = row * width
             triangle = [origin+width,origin+points,origin+width+points]
             triangles.append(triangle)
             #shades.append((hgt[origin]))
@@ -226,9 +212,7 @@ if __name__ == '__main__':
             triangle = [origin,origin+width,origin+points]
             triangles.append(triangle)
             #shades.append((hgt[origin]))
-        for row in range(height - 1):
-            origin = (row * width) + (width - 1)
-            triangle = [origin+width,origin+points,origin+width+points]
+            triangle = [origin+width,origin+width+points,origin+points]
             triangles.append(triangle)
             #shades.append((hgt[origin]))
 
