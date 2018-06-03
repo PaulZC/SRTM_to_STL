@@ -1,7 +1,6 @@
 ## Code for the SRTM resampler
 
 ## Converts a NASA SRTM 1arcsec hgt file into a 3arcsec hgt file
-## or 3arcsec to 9arcsec for larger areas
 
 ## Run from the command line as:
 ## python SRTM_resample.py filename.hgt
@@ -15,10 +14,12 @@ import numpy
 
 if __name__ == '__main__':
     try:
-        print 'Resampling SRTM'
+        print 'Resampling SRTM (Converting 1 arc-second data to 3 arc-second)'
         
         filename = ''
         
+        #filename = 'S26E131.hgt' # Ayers Rock
+
         if filename == '':
             # Check if the hgt filename was passed in argv
             if len(sys.argv) > 1: filename = sys.argv[1]
@@ -38,13 +39,10 @@ if __name__ == '__main__':
 
         points = len(hgt) # Get the numper of points
 
-        if points == 1442401:
-            width = 1201 # SRTM3 files are 1201 * 1201
-            height = 1201
-        elif points == 12967201:
-            width = 3601 # SRTM1 files are 3601 * 3601
-            height = 3601
-        else:
+        width = 3601 # SRTM1 files are 3601 * 3601
+        height = 3601
+
+        if points != width * height: # Check we've got the correct amount of data
             raise Exception('Invalid file!')
 
         print 'Points:',points
@@ -54,18 +52,17 @@ if __name__ == '__main__':
 
         newhgt = [] # Create an empty array to hold the new height data
 
-        for h in range(0,(height-2),3): # process every third row
-            for w in range(0,(width-2),3): # process every third column
+        for h in range(0,(height+1),3): # process every third row
+            for w in range(0,(width+1),3): # process every third column
+                
                 # calculate the average height of the next nine data points (3x3)
-                av_hgt = hgt[h:h+3,w:w+3].sum() / 9. 
-                newhgt.append(int(av_hgt))
-            av_hgt = hgt[h:h+3,w+3].sum() / 3. # process last column
-            newhgt.append(int(av_hgt))
-        for w in range(0,(width-2),3): # process last row
-            av_hgt = hgt[h+3,w:w+3].sum() / 3. 
-            newhgt.append(int(av_hgt))
-        av_hgt = hgt[h+3,w+3] # copy last point
-        newhgt.append(int(av_hgt))          
+                #av_hgt = hgt[h:h+2,w:w+2].sum() / 9.
+                #newhgt.append(int(av_hgt))
+                
+                # calculate the maximum height of the next nine data points (3x3)
+                # works best for mountainous areas
+                max_hgt = hgt[h:h+2,w:w+2].max()
+                newhgt.append(int(max_hgt))
 
         newhgt = numpy.ravel(newhgt)
 

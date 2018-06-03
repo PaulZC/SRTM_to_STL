@@ -126,10 +126,9 @@ if __name__ == '__main__':
         north2 = numpy.reshape(north2,(height2,-1))
         hgt2 = numpy.reshape(hgt2,(height2,-1))
 
-
-        # Check both files are the same size
-        if points1 != points2: raise Exception('File sizes do not match!')
-
+        # Check files share either width or height
+        if ((width1 != width2) and (height1 != height2)):
+            raise Exception('Files do not share width or height!')
 
         if LR:
             # remove duplicated column
